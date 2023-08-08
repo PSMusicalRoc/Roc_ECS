@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "RocLogger/RocLogger.hpp"
 #include "IComponentArray.h"
 
 class ComponentManager
@@ -15,7 +16,7 @@ public:
 
 		if (mComponentTypes.find(typeName) != mComponentTypes.end())
         {
-            ROC_SetErrorMessage("Attempting to register ComponentType twice. (RegisterComponent)");
+            LogError("Attempting to register ComponentType twice.");
             return false;
         }
 
@@ -37,7 +38,7 @@ public:
 
 		if (mComponentTypes.find(typeName) == mComponentTypes.end())
         {
-            ROC_SetErrorMessage("Attempted to access ComponentType before registering (GetComponentType)");
+            LogError("Attempted to access ComponentType before registering.");
             return MAX_COMPONENTS;
         }
 
@@ -69,7 +70,7 @@ public:
 		// Get a reference to a component from the array for an entity
         std::shared_ptr<ComponentArray<T>> ptr = GetComponentArray<T>();
         /** @todo AGAIN PLEASE FIX, I HATE ASSERTS IN REAL CODE */
-        if (ptr == nullptr) assert(false && "GAH");
+        if (ptr == nullptr) LogAssert(false && "GAH");
 		return ptr->GetData(entity);
 	}
 
@@ -103,7 +104,7 @@ private:
 
 		if (mComponentTypes.find(typeName) == mComponentTypes.end())
         {
-            ROC_SetErrorMessage("Attempted to access nonexistent ComponentArray. (GetComponentArray)");
+            LogError("Attempted to access nonexistent ComponentArray.");
             return nullptr;
         }
 

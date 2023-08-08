@@ -4,7 +4,7 @@
 #include <queue>
 #include <array>
 
-#include "RocErrorManagement/ErrorHandler.h"
+#include "RocLogger/RocLogger.hpp"
 
 #include "Entity.h"
 #include "Component.h"
@@ -35,7 +35,7 @@ public:
     {
         if (mLivingCount >= MAX_ENTITIES)
         {
-            ROC_SetErrorMessage("Tried to instantiate an entity past the Entity limit.");
+	    LogError("Tried to instantiate an entity past the Entity limit.");
             return MAX_ENTITIES;
         }
         Entity id = mAvailableEntities.front();
@@ -56,7 +56,7 @@ public:
     {
         if (entity >= MAX_ENTITIES)
         {
-            ROC_SetErrorMessage("Entity ID supplied to DestroyEntity is out of range.");
+	    LogError("Entity ID supplied to DestroyEntity is out of range.");
             return false;
         }
 
@@ -76,7 +76,7 @@ public:
     {
         if (entity >= MAX_ENTITIES)
         {
-            ROC_SetErrorMessage("Entity ID supplied to SetSignature is out of range.");
+	    LogError("Entity ID supplied to SetSignature is out of range.");
             return false;
         }
 
@@ -93,7 +93,7 @@ public:
     {
         if (entity >= MAX_ENTITIES)
         {
-            ROC_SetErrorMessage("Entity ID supplied to GetSignature is out of range.");
+	    LogError("Entity ID supplied to GetSignature is out of range.");
             return NULL;
         }
 

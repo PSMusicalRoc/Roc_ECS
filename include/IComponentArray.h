@@ -4,8 +4,7 @@
 #include <array>
 #include <unordered_map>
 
-#include "RocErrorManagement/ErrorHandler.h"
-#include <cassert>
+#include "RocLogger/RocLogger.hpp"
 
 #include "Entity.h"
 #include "Component.h"
@@ -25,7 +24,7 @@ public:
 	{
 		if (mEntityToIndexMap.find(entity) != mEntityToIndexMap.end())
         {
-            ROC_SetErrorMessage("Attempting to add another duplicate component to entity. (InsertData)");
+            LogError("Attempting to add another duplicate component to entity.");
             return false;
         }
 
@@ -42,7 +41,7 @@ public:
 	{
 		if (mEntityToIndexMap.find(entity) == mEntityToIndexMap.end())
         {
-            ROC_SetErrorMessage("Could not find the entity in the index map. (RemoveData)");
+            LogError("Could not find the entity in the index map.");
             return false;
         }
 
@@ -68,7 +67,7 @@ public:
 		if (mEntityToIndexMap.find(entity) == mEntityToIndexMap.end())
         {
             /** @todo PLEASE FIX THIS, I HATE THIS CODE */
-            assert(false && "Cannot find entity in index map. (GetData)");
+            LogAssert(false && "Cannot find entity in index map.");
         }
 
 		// Return a reference to the entity's component

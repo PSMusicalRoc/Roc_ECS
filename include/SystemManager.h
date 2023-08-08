@@ -4,7 +4,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "RocErrorManagement/ErrorHandler.h"
+#include "RocLogger/RocLogger.hpp"
 #include "Entity.h"
 #include "Component.h"
 #include "System.h"
@@ -19,7 +19,7 @@ public:
 
 		if (mSystems.find(typeName) != mSystems.end())
         {
-            ROC_SetErrorMessage("Attempting to register System twice (RegisterSystem)");
+            LogError("Attempting to register System twice.");
             return nullptr;
         }
 
@@ -36,7 +36,7 @@ public:
 
         if (mSystems.find(typeName) == mSystems.end())
         {
-            ROC_SetErrorMessage("Requested System is not registered yet (GetSystem)");
+            LogError("Requested System is not registered yet!");
             return nullptr;
         }
 
@@ -50,7 +50,7 @@ public:
 
 		if (mSystems.find(typeName) == mSystems.end())
         {
-            ROC_SetErrorMessage("Attempted to use System before registering it (SetSignature)");
+            LogError("Attempted to use System before registering it!");
             return false;
         }
 

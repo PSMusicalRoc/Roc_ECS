@@ -16,6 +16,8 @@ project "ECSTest"
         "include/"
     }
 
+    include("vendor/RocLogger")
+
     filter "configurations:Debug"
         defines {"ROC_DEBUG"}
         symbols "On"
