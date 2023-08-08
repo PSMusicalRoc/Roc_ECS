@@ -1,0 +1,7 @@
+obj/
+bin/
+.cache/
+*.make
+Makefile
+compile_commands.json
+.vscode/
