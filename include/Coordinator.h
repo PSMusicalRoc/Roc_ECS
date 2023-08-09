@@ -130,6 +130,4 @@ private:
 	std::unique_ptr<SystemManager> mSystemManager;
 };
 
-Coordinator* Coordinator::mCoordinatorPtr = nullptr;
-
 #endif
