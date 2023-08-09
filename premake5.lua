@@ -1,11 +1,3 @@
-workspace "ECSTestWorkspace"
-    configurations {"Debug", "Release"}
-
-
-project "ECSTest"
-    kind "ConsoleApp"
-    targetdir "bin"
-
     files {
         "src/**.cpp",
         "include/**.h",
