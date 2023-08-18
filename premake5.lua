@@ -1,3 +1,5 @@
+filter {}
+
     files {
         "src/**.cpp",
         "include/**.h",
@@ -18,3 +20,5 @@
         kind "WindowedApp"
         defines {"ROC_RELEASE"}
         optimize "On"
+
+filter {}
