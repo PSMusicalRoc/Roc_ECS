@@ -10,7 +10,7 @@ filter {}
         "include/"
     }
 
-    include("vendor/RocLogger")
+    dofile("vendor/RocLogger/premake5.lua")
 
     filter "configurations:Debug"
         defines {"ROC_DEBUG"}
