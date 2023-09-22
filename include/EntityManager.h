@@ -87,14 +87,14 @@ public:
     /**
      * Sets a particular Entity's Signature
      * 
-     * @returns NULL if entity is out of range, the Signature otherwise
+     * @returns Signature(0) if entity is out of range, the Signature otherwise
     */
     Signature GetSignature(Entity entity)
     {
         if (entity >= MAX_ENTITIES)
         {
 	    LogError("Entity ID supplied to GetSignature is out of range.");
-            return NULL;
+            return Signature(0);
         }
 
         return mSignatures[entity];
