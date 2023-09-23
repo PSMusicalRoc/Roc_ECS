@@ -35,18 +35,46 @@ public:
 
 
 	// Entity methods
-	Entity CreateEntity()
+	Entity CreateEntity(const std::string& name)
 	{
-		return mEntityManager->CreateEntity();
+		return mEntityManager->CreateEntity(name);
 	}
 
-	void DestroyEntity(Entity entity)
+	Entity GetEntity(const std::string& name)
 	{
-		mEntityManager->DestroyEntity(entity);
+		return mEntityManager->GetEntity(name);
+	}
 
-		mComponentManager->EntityDestroyed(entity);
+	void DestroyEntity(const std::string& name)
+	{
+		Entity e = mEntityManager->GetEntity(name);
+		mEntityManager->DestroyEntity(name);
 
-		mSystemManager->EntityDestroyed(entity);
+		mComponentManager->EntityDestroyed(e);
+
+		mSystemManager->EntityDestroyed(e);
+	}
+
+	void DestroyAllEntities()
+	{
+		if (mEntityManager->mEntities.empty())
+            return;
+
+        std::map<std::string, Entity>::iterator before = mEntityManager->mEntities.begin();
+        std::map<std::string, Entity>::iterator after = mEntityManager->mEntities.begin();
+        after++;
+
+        while (before != mEntityManager->mEntities.end())
+        {
+			mComponentManager->EntityDestroyed(before->second);
+			mSystemManager->EntityDestroyed(before->second);
+            mEntityManager->mSignatures[before->second].reset();
+            mEntityManager->mAvailableEntities.push(before->second);
+            mEntityManager->mEntities.erase(before);
+            before = after;
+            if (after != mEntityManager->mEntities.end())
+                after++;
+        }
 	}
 
 

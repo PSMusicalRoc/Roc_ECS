@@ -3,6 +3,8 @@
 
 #include <queue>
 #include <array>
+#include <map>
+#include <string>
 
 #include "RocLogger/RocLogger.hpp"
 
@@ -11,10 +13,13 @@
 
 class EntityManager
 {
+    friend class Coordinator;
+
 private:
     std::queue<Entity> mAvailableEntities;
     std::uint32_t mLivingCount = 0;
     std::array<Signature, MAX_ENTITIES> mSignatures;
+    std::map<std::string, Entity> mEntities;
 
 public:
     EntityManager()
@@ -31,7 +36,7 @@ public:
      * 
      * @returns On Error - MAX_ENTITIES, else the new Entity ID.
     */
-    Entity CreateEntity()
+    Entity CreateEntity(const std::string& ent_name)
     {
         if (mLivingCount >= MAX_ENTITIES)
         {
@@ -40,9 +45,23 @@ public:
         }
         Entity id = mAvailableEntities.front();
         mAvailableEntities.pop();
+
+        mEntities.emplace(ent_name, id);
+
         mLivingCount++;
 
         return id;
+    }
+
+    Entity GetEntity(const std::string& ent_name)
+    {
+        std::map<std::string, Entity>::iterator it;
+        if ((it = mEntities.find(ent_name)) == mEntities.end())
+        {
+            LogError("Tried to find entity of name " + ent_name + " but couldn't");
+            return NULL;
+        }
+        return it->second;
     }
 
     /**
@@ -52,19 +71,39 @@ public:
      * 
      * @returns false if entity is out of range, true otherwise.
     */
-    bool DestroyEntity(Entity entity)
+    bool DestroyEntity(const std::string& ent_name)
     {
-        if (entity >= MAX_ENTITIES)
+        std::map<std::string, Entity>::iterator it;
+        if ((it = mEntities.find(ent_name)) == mEntities.end())
         {
-	    LogError("Entity ID supplied to DestroyEntity is out of range.");
-            return false;
+            LogError("Attempted to delete an entity that does not exist! (name = " + ent_name + ")");
         }
 
-        mSignatures[entity].reset();
-
-        mAvailableEntities.push(entity);
+        mSignatures[it->second].reset();
+        mAvailableEntities.push(it->second);
+        mEntities.erase(it);
         mLivingCount--;
         return true;
+    }
+
+    void DestroyAllEntities()
+    {
+        if (mEntities.empty())
+            return;
+
+        std::map<std::string, Entity>::iterator before = mEntities.begin();
+        std::map<std::string, Entity>::iterator after = mEntities.begin();
+        after++;
+
+        while (before != mEntities.end())
+        {
+            mSignatures[before->second].reset();
+            mAvailableEntities.push(before->second);
+            mEntities.erase(before);
+            before = after;
+            if (after != mEntities.end())
+                after++;
+        }
     }
 
     /**
