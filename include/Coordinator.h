@@ -101,6 +101,21 @@ public:
         return true;
 	}
 
+	void AddComponentToEntityFromText(Entity e, const std::string& typeName)
+	{
+		if (!mComponentManager->AddComponentToEntityFromText(e, typeName))
+		{
+			LogError("Could not load component " + typeName);
+			return;
+		}
+
+		auto signature = mEntityManager->GetSignature(e);
+		signature.set(mComponentManager->GetComponentType(typeName), true);
+		mEntityManager->SetSignature(e, signature);
+
+		mSystemManager->EntitySignatureChanged(e, signature);
+	}
+
 	template<typename T>
 	bool RemoveComponent(Entity entity)
 	{

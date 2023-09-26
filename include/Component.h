@@ -10,6 +10,12 @@ const ComponentType MAX_COMPONENTS = 64;
 
 using Signature = std::bitset<MAX_COMPONENTS>;
 
+#define ROCKET_COMPONENT(cname, ...) class cname : public Component {\
+public:\
+    static std::string name() { return #cname; }\
+    __VA_ARGS__ \
+}
+
 /**
  * A quick base class, just so that any components
  * created all implement certain Constructors and have

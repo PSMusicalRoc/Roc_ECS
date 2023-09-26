@@ -3,9 +3,9 @@
 
 #include "Component.h"
 
-struct Transform : public Component
-{
+ROCKET_COMPONENT(Transform,
+public:
     double x = 0, y = 0, z = 0;
-};
+);
 
 #endif

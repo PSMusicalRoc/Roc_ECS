@@ -3,9 +3,9 @@
 
 #include "Component.h"
 
-struct Gravity : public Component
-{
+ROCKET_COMPONENT(Gravity,
+public:
     double acceleration = 9.81;
-};
+);
 
 #endif
