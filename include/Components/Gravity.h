@@ -4,8 +4,7 @@
 #include "Component.h"
 
 ROCKET_COMPONENT(Gravity,
-public:
-    double acceleration = 9.81;
+    ROCKET_PROPERTY_DEFVAL(public, double, gravity, 9.81)
 );
 
 #endif

@@ -15,9 +15,11 @@
 #include "Components/Transform.h"
 #include "Components/Gravity.h"
 #include "Components/Sprite.h"
+#include "Components/RectangleCollider.hpp"
 
 // Systems
 
 #include "Systems/RenderSpriteSys.hpp"
+#include "Systems/CollisionSystem.hpp"
 
 #endif
