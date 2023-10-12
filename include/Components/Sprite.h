@@ -16,8 +16,8 @@
 //     static std::string name() { return "Sprite"; }
 //     friend class RenderSpriteSystem;
 
-//     std::string _tex_key = "";
-//     std::string _shader_key = "";
+//     std::string texture_key = "";
+//     std::string shader_key = "";
 
 //     double offsetX = 0, offsetY = 0;
 //     double width = 0.0, height = 0.0;
@@ -43,8 +43,8 @@
 ROCKET_COMPONENT(Sprite,
     ROCKET_RAW(friend class RenderSpriteSystem;)
 
-    ROCKET_PROPERTY_DEFVAL(public, std::string, _tex_key, "")
-    ROCKET_PROPERTY_DEFVAL(public, std::string, _shader_key, "")
+    ROCKET_PROPERTY_DEFVAL(public, std::string, texture_key, "")
+    ROCKET_PROPERTY_DEFVAL(public, std::string, shader_key, "")
 
     ROCKET_PROPERTY_DEFVAL(public, double, offsetX, 0.0)
     ROCKET_PROPERTY_DEFVAL(public, double, offsetY, 0.0)
@@ -54,7 +54,7 @@ ROCKET_COMPONENT(Sprite,
     ROCKET_RAW(public: void SetOutputData(double thisx, double thisy);)
     ROCKET_RAW(public: void DestroyComponent() override;)
 
-    ROCKET_PROPERTY(private, unsigned int, VBO)
+    ROCKET_PROPERTY_DEFVAL(private, unsigned int, VBO, 0)
     
     ROCKET_RAW(private: double vertices[30] = {
         /// positions   /// texture positions

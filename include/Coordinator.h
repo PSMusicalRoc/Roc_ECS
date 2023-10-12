@@ -138,6 +138,11 @@ public:
 		return mComponentManager->GetComponent<T>(entity);
 	}
 
+	Component* GetComponentAbstract(const std::string& typeName, Entity entity)
+	{
+		return mComponentManager->GetComponentAbstract(typeName, entity);
+	}
+
 	template<typename T>
 	ComponentType GetComponentType()
 	{

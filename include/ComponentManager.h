@@ -48,6 +48,8 @@ public:
 
 		mCreateCompFuncs[typeName] = [=](Entity e){ return this->AddComponent<T>(e); };
 
+		mAccessCompFuncs[typeName] = [=](Entity e){ return (Component*)this->GetComponentPtr<T>(e); };
+
 		// Increment the value so that the next component registered will be different
 		++mNextComponentType;
         return true;
@@ -109,6 +111,16 @@ public:
 		return ptr->GetData(entity);
 	}
 
+	Component* GetComponentAbstract(const std::string& typeName, Entity entity)
+	{
+		if (mAccessCompFuncs.find(typeName) == mAccessCompFuncs.end())
+        {
+            LogError("Attempted to access Component before registering.");
+            return nullptr;
+        }
+		return mAccessCompFuncs.at(typeName)(entity);
+	}
+
 	void EntityDestroyed(Entity entity)
 	{
 		// Notify each component array that an entity has been destroyed
@@ -130,6 +142,8 @@ private:
 
 	std::unordered_map<std::string, std::function<bool(Entity)>> mCreateCompFuncs{};
 
+	std::unordered_map<std::string, std::function<Component*(Entity)>> mAccessCompFuncs{};
+
 	// The component type to be assigned to the next registered component - starting at 0
 	ComponentType mNextComponentType{};
 
@@ -146,6 +160,17 @@ private:
         }
 
 		return std::static_pointer_cast<ComponentArray<T>>(mComponentArrays[typeName]);
+	}
+
+	// convenience function for accessing the abstract version of a component
+	template<typename T>
+	T* GetComponentPtr(Entity e)
+	{
+		std::string typeName = T::name();
+
+		std::shared_ptr<ComponentArray<T>> c_ar = GetComponentArray<T>();
+
+		return &(c_ar.get()->GetData(e));
 	}
 };
 
