@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <bitset>
 
-#include <variant>
+#include <any>
 #include <map>
 #include <functional>
 
@@ -15,7 +15,7 @@
 // z, data, elem
 #define PRINT_TO_SETTER(z, data, elem) BOOST_PP_IF(BOOST_PP_TUPLE_ELEM(0, elem),\
 /*noraw*/ void BOOST_PP_CAT(__set_, BOOST_PP_TUPLE_ELEM(3, elem))(Property p)\
-{BOOST_PP_TUPLE_ELEM(3, elem) = std::get<BOOST_PP_TUPLE_ELEM(2, elem)>(p); }, \
+{BOOST_PP_TUPLE_ELEM(3, elem) = std::any_cast<BOOST_PP_TUPLE_ELEM(2, elem)>(p); }, \
 /*rawinput*/ )
 
 #define PRINT_TO_COPYSTATEMENT(z, data, elem) BOOST_PP_IF(BOOST_PP_TUPLE_ELEM(0, elem),\
@@ -66,7 +66,7 @@ public: cname & operator=(const cname & cpy) {\
 }\
 }
 
-using Property = std::variant<int, unsigned int, bool, double, std::string>;
+using Property = std::any;
 
 using ComponentType = std::uint16_t;
 
