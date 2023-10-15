@@ -23,6 +23,5 @@ ROCKET_COMPONENT(RectangleCollider,
     ROCKET_PROPERTY_DEFVAL(public, double, offsetY, 0)
     ROCKET_PROPERTY(public, double, width)
     ROCKET_PROPERTY(public, double, height)
-    // @todo This right here is probably going to cause some issues
     ROCKET_RAW(public: std::vector<Collision> collisions;)
 );
