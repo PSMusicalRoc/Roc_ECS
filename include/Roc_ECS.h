@@ -1,6 +1,15 @@
 #ifndef _ROC_ECS_H_
 #define _ROC_ECS_H_
 
+/**
+ * @file Roc_ECS.h
+ * 
+ * @brief Overall include for the Entity-Component System
+ * 
+ * @note This, and most base ECS classes, were adapted from
+ * [Austin Morlan's amazing ECS writeup here.](https://austinmorlan.com/posts/entity_component_system/)
+*/
+
 // Core
 
 #include "Entity.h"
