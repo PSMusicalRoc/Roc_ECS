@@ -6,10 +6,6 @@ filter {}
         "include/**.cpp"
     }
 
-    includedirs {
-        "include/"
-    }
-
     dofile("vendor/RocLogger/premake5.lua")
 
     filter "configurations:Debug"
