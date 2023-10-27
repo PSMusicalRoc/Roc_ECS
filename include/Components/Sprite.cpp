@@ -23,26 +23,26 @@ void Sprite::SetOutputData(double thisx, double thisy)
         {
         case 'a':
             // top right corner
-            vertices[5*i] = EX2GL(thisx + offsetX + _width);
-            vertices[5*i + 1] = EY2GL(thisy + offsetY + _height);
+            vertices[5*i] = E2GLX(thisx + offsetX + _width);
+            vertices[5*i + 1] = E2GLY(thisy + offsetY + _height);
             vertices[5*i+2] = 0.0;
             break;
         case 'b':
             // top left corner
-            vertices[5*i] = EX2GL(thisx + offsetX);
-            vertices[5*i + 1] = EY2GL(thisy + offsetY + _height);
+            vertices[5*i] = E2GLX(thisx + offsetX);
+            vertices[5*i + 1] = E2GLY(thisy + offsetY + _height);
             vertices[5*i+2] = 0.0;
             break;
         case 'c':
             // bottom left corner
-            vertices[5*i] = EX2GL(thisx + offsetX);
-            vertices[5*i + 1] = EY2GL(thisy + offsetY);
+            vertices[5*i] = E2GLX(thisx + offsetX);
+            vertices[5*i + 1] = E2GLY(thisy + offsetY);
             vertices[5*i+2] = 0.0;
             break;
         case 'd':
             // bottom right corner
-            vertices[5*i] = EX2GL(thisx + offsetX + _width);
-            vertices[5*i + 1] = EY2GL(thisy + offsetY);
+            vertices[5*i] = E2GLX(thisx + offsetX + _width);
+            vertices[5*i + 1] = E2GLY(thisy + offsetY);
             vertices[5*i+2] = 0.0;
             break;
         };
